@@ -11,22 +11,6 @@ using namespace std;
 class CSVParser {
 
 	public:
-		/*
-		bool isFileValid(ifstream fileReader) {
-			int cCnt = 0;
-			int rCnt = 0;
-			string cLine;
-			while ( getline(fileReader, cLine) ) {
-				rCnt++;
-				istringstream str(cLine);
-				string pch;
-				vector<string> cData;
-				while ( getline(str, pch, TOKEN)) {	
-					
-				}
-		}
-		*/
-
 		vector< vector<string> > parseFile(const string fileName) {
 			try {
 				vector< vector<string> > data;
@@ -38,7 +22,7 @@ class CSVParser {
 						istringstream str(cLine);
 						string pch;
 						vector<string> cData;
-						while ( getline(str, pch, TOKEN)) {	
+						while ( getline(str, pch, TOKEN)) {
 							cData.push_back(pch);
 						}
 						data.push_back(cData);
