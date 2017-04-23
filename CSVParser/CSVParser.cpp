@@ -13,6 +13,8 @@ class CSVParser {
 	public:
 		vector< vector<string> > parseFile(const string fileName) {
 			try {
+				int token_count = 0;
+				bool initial_row = true;
 				vector< vector<string> > data;
 				ifstream fileReader;
 				fileReader.open(fileName.c_str(), ios::in);
@@ -22,9 +24,20 @@ class CSVParser {
 						istringstream str(cLine);
 						string pch;
 						vector<string> cData;
+						int current_token_count = 0;
 						while ( getline(str, pch, TOKEN)) {
 							cData.push_back(pch);
+							if (initial_row)
+								token_count++;
+							else
+								current_token_count++;
 						}
+						if (!initial_row) {
+							if (current_token_count != token_count) {
+								throw "Invalid CSV file.";
+							}
+						}
+						initial_row = false;
 						data.push_back(cData);
 					}
 				}
@@ -35,6 +48,9 @@ class CSVParser {
 			}
 			catch (exception& e) {
 				cerr << "Failed to parse the CSV file : Exception = " << e.what() << endl;
+			}
+			catch (const char* msg) {
+				cerr << "Failed to parse the CSV file : Exception = " << msg << endl;
 			}
 		}
 
@@ -58,4 +74,3 @@ class CSVParser {
 			return data[0].size();
 		}
 };
-
